@@ -1,8 +1,9 @@
+import UseEffect from "./Components/UseEffect";
 
 function App() {
- return(
-  <p></p>
- )
+  return(
+    <UseEffect></UseEffect>
+  );
 }
 
-export default App
+export default App; 
