@@ -9,7 +9,7 @@ function Header({open, setOpen}){
             </div>
 
             <button
-         className="nav-toggle"
+          className="nav-toggle"
           onClick={() => setOpen(!open)}
           aria-label="Ouvrir le menu"
           aria-expanded="false"
