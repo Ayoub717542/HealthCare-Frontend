@@ -1,8 +1,8 @@
 function Header({open, setOpen}){
     return(
-<header>        <h1>
-            HealthCare
-        </h1>
+<header>       
+   <h1>HealthCare</h1>
+
          <div className="header-right">
                 <span>Admin</span>
                 <button className="LogoutBtn">Logout</button>

@@ -5,7 +5,7 @@ function Sidebar({open}){
 
         <aside className={open ? "active" : ""}>
         <NavLink to="/">Accueil</NavLink>
-
+        <NavLink to="/Login">login</NavLink>
       <NavLink to="/DashBoard">Dashboard</NavLink>
 
       <NavLink to="/patients">Patients</NavLink>
