@@ -1,6 +1,6 @@
 function Appoinments(){
     return(
-        <p></p>
+        <h1>Appoinments</h1>
     )
 }
 export default Appoinments

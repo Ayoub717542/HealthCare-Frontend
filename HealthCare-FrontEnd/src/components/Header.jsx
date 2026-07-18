@@ -1,22 +1,24 @@
-function Header({open, setOpen}){
-    return(
-<header>       
-   <h1>HealthCare</h1>
+function Header({ open, setOpen }) {
+  return (
+    <header className="header">
 
-         <div className="header-right">
-                <span>Admin</span>
-                <button className="LogoutBtn">Logout</button>
-            </div>
+      <button
+        className="nav-toggle"
+        onClick={() => setOpen(!open)}
+      >
+        <i className="fa-solid fa-bars"></i>
+      </button>
 
-            <button
-          className="nav-toggle"
-          onClick={() => setOpen(!open)}
-          aria-label="Ouvrir le menu"
-          aria-expanded="false"
-            >
-          <i className="fa-solid fa-bars"></i>
-            </button>
-       </header>
-    )
+      
+      <div className="header-right">
+        <span className="admin">👤 Admin</span>
+        <button className="logout-btn">
+          Logout
+        </button>
+      </div>
+
+    </header>
+  );
 }
-export default Header
+
+export default Header;

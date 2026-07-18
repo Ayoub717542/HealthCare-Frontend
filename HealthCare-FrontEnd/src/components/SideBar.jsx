@@ -1,25 +1,67 @@
 import { NavLink } from "react-router-dom";
+import {
+  FaHome,
+  FaUserInjured,
+  FaUserMd,
+  FaCalendarAlt,
+  FaFolderOpen,
+  FaInfoCircle,
+  FaSignInAlt
+} from "react-icons/fa";
 
-function Sidebar({open}){
-    return(
+function Sidebar({ open }) {
+  return (
+    <aside className={`sidebar ${open ? "active" : ""}`}>
 
-        <aside className={open ? "active" : ""}>
-        <NavLink to="/">Accueil</NavLink>
-        <NavLink to="/Login">login</NavLink>
-      <NavLink to="/DashBoard">Dashboard</NavLink>
+      <div className="logo">
+        <h2>
+          Health <span>Care+</span>
+        </h2>
+      </div>
 
-      <NavLink to="/patients">Patients</NavLink>
+      <nav>
 
-      <NavLink to="/doctors">Médecins</NavLink>
+        <NavLink to="/">
+          <FaHome />
+          <span>DashBoard</span>
+        </NavLink>
 
-      <NavLink to="/appointments">Rendez-vous</NavLink>
+        <NavLink to="/patients">
+          <FaUserInjured />
+          <span>Patients</span>
+        </NavLink>
 
-      <NavLink to="/records">records</NavLink>
+        <NavLink to="/doctors">
+          <FaUserMd />
+          <span>Doctors</span>
+        </NavLink>
 
-      <NavLink to="/about">À propos</NavLink>
+        <NavLink to="/appointments">
+          <FaCalendarAlt />
+          <span>Appoinments</span>
+        </NavLink>
 
-        </aside>
+        <NavLink to="/records">
+          <FaFolderOpen />
+          <span>Medical Records</span>
+        </NavLink>
 
-    )
+        <NavLink to="/about">
+          <FaInfoCircle />
+          <span>About</span>
+        </NavLink>
+
+      </nav>
+
+      <div className="bottom">
+        <NavLink to="/login">
+          <FaSignInAlt />
+          <span>LogIn</span>
+        </NavLink>
+      </div>
+
+    </aside>
+  );
 }
-export default Sidebar
+
+export default Sidebar;

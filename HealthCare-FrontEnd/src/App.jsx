@@ -1,6 +1,5 @@
-import { BrowserRouter, Route,Routes  } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import Home from "./views/Home";
 import DashBoard from "./views/DashBoard";
 import Patients from "./views/Patients";
 import Doctors from "./views/Doctors";
@@ -14,52 +13,63 @@ import api from "./service/api";
 import Login from "./views/Login";
 
 function App() {
-
-    const [open, setOpen] = useState(false);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const user = {
-        username,
-        password
-    };
+
     try {
-        const response = await api.post("/auth/login",user );
-        localStorage.setItem("token",response.data.token );
-        console.log("Login success");
-    } catch(error) {
-        console.log("Login failed");
+      const response = await api.post("/auth/login", {
+        username,
+        password,
+      });
+
+      localStorage.setItem("token", response.data.token);
+      console.log("Login success");
+    } catch (error) {
+      console.log("Login failed");
     }
-};
+  };
 
- return(
- <BrowserRouter>
- <Header open={open} setOpen={setOpen} />
-<Sidebar open={open} />
-<Routes>
+  return (
+    <BrowserRouter>
+      <div className="app">
 
-<Route 
-  path="/Login" 
-  element={<Login 
-              handleLogin={handleLogin}          
-              username={username}
-              password={password}
-              setUsername={setUsername}
-              setPassword={setPassword}
-              />} 
-/>  <Route path ="/" element={<Home></Home>} />
-  <Route path ="/DashBoard" element={<DashBoard></DashBoard>} />
-  <Route path ="/Patients" element={<Patients></Patients>} />
-  <Route path ="/Doctors" element={<Doctors></Doctors>} />
-  <Route path ="/Appointments" element={<Appointments></Appointments>} />
-  <Route path ="/MedicalRecords" element={<MedicalRecords></MedicalRecords>} />
-  <Route path ="/About" element={<About></About>} />
-  <Route path ="*" element={<NotFound></NotFound>} />
-  </Routes> 
- </BrowserRouter>
- )
+        <Sidebar open={open} />
+
+        <div className="content">
+
+          <Header open={open} setOpen={setOpen} />
+
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <Login
+                  handleLogin={handleLogin}
+                  username={username}
+                  password={password}
+                  setUsername={setUsername}
+                  setPassword={setPassword}
+                />
+              }
+            />
+
+            <Route path="/" element={<DashBoard />} />
+            <Route path="/patients" element={<Patients />} />
+            <Route path="/doctors" element={<Doctors />} />
+            <Route path="/appointments" element={<Appointments />} />
+            <Route path="/medicalrecords" element={<MedicalRecords />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+
+        </div>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
