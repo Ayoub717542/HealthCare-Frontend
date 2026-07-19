@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes,useNavigate  } from "react-router-dom";
 import { useState } from "react";
 import DashBoard from "./views/DashBoard";
 import Patients from "./views/Patients";
@@ -16,6 +16,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,14 +28,15 @@ function App() {
       });
 
       localStorage.setItem("token", response.data.token);
-      console.log("Login success");
+      navigate("/"); 
     } catch (error) {
-      console.log("Login failed");
+      console.log(error); 
+      console.log(error.message);
+      console.log(error.response); 
     }
   };
 
   return (
-    <BrowserRouter>
       <div className="app">
 
         <Sidebar open={open} />
@@ -68,7 +70,7 @@ function App() {
 
         </div>
       </div>
-    </BrowserRouter>
+
   );
 }
 

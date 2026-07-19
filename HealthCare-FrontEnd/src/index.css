@@ -1,4 +1,4 @@
-/* Reset */
+
 
 *{
     margin:0;
@@ -11,7 +11,6 @@ body{
     font-family:Arial, Helvetica, sans-serif;
 }
 
-/* Layout */
 
 .app{
     display:flex;
@@ -23,8 +22,6 @@ body{
     display:flex;
     flex-direction:column;
 }
-
-/* ================= HEADER ================= */
 
 .header{
     height:70px;
@@ -285,22 +282,28 @@ th {
     background: teal;
     color: white;
 }
-.doctor-form {
-    width: 40%;
-    margin: 2rem auto;
-    padding: 2rem;
-    box-shadow: 0 0 10px #ccc;
+.form-container{
+    width:40%;
+    margin:2rem auto;
+    padding:2rem;
+    background:white;
+    box-shadow:0 0 10px #ccc;
+    border-radius:8px;
 }
 
-.doctor-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.form-container form{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
 }
 
-.doctor-form input,
-.doctor-form button {
-    padding: 0.7rem;
+.form-container input{
+    padding:.7rem;
+    border:1px solid #ccc;
+}
+
+.form-container button{
+    padding:.7rem;
 }
 
 @media(max-width:768px){

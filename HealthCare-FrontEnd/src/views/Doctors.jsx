@@ -1,159 +1,137 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "../service/api";
 
 function Doctors() {
+  const [doctors, setDoctors] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [formData, setFormData] = useState({
+    nom: "",
+    prenom: "",
+    email: "",
+    telephone: "",
+    specialite: "",
+  });
 
-    const [showForm, setShowForm] = useState(false);
+  function fetchDoctors() {
+    api.get("/medecine/getMedecinePagination").then((response) => {
+      setDoctors(response.data.content);
+    });
+  }
 
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
 
-    const doctors = [
-        {
-            id: 1,
-            name: "John Smith",
-            specialty: "Cardiology",
-            phone: "0612345678"
-        },
-        {
-            id: 2,
-            name: "Sarah Brown",
-            specialty: "Dermatology",
-            phone: "0678901234"
-        },
-        {
-            id: 3,
-            name: "Michael Lee",
-            specialty: "Pediatrics",
-            phone: "0654321987"
-        }
-    ];
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
 
+  function handleSubmit(e) {
+    e.preventDefault(); 
 
-    return (
+    if (editingId) {
+      api.put(`/medecine/modifier/${editingId}`, formData).then(() => {
+        setShowForm(false);
+        setEditingId(null);
+        fetchDoctors();
+      });
+    } else {
+      api.post("/medecine/ajouterMedecin", formData).then(() => {
+        setShowForm(false);
+        fetchDoctors();
+      });
+    }
+  }
 
-        <div className="doctors">
+  function handleEdit(medecine) {
+    setFormData({
+      nom: medecine.nom,
+      prenom: medecine.prenom,
+      email: medecine.email,
+      telephone: medecine.telephone,
+      specialite: medecine.specialite,
+    });
+    setEditingId(medecine.id);
+    setShowForm(true);
+  }
 
+  function handleDelete(medecine) {
+    const sure = window.confirm(`Delete ${medecine.prenom} ${medecine.nom}?`);
+    if (!sure) return;
+    api.delete(`/medecine/supprimer/${medecine.id}`).then(() => {
+      fetchDoctors();
+    });
+  }
 
-            {showForm ? (
+  return (
+    <div className="doctors">
+      {showForm ? (
+        <div className="form-container">
+          <h2>Add Doctor</h2>
+          <form onSubmit={handleSubmit}>
 
-                // Your same form
-                <div className="doctor-form">
+            <label>Full Name</label>
+            <input name="nom" value={formData.nom} onChange={handleChange} />
 
-                    <h2>Add Doctor</h2>
+            <label>Email</label>
+            <input name="email" value={formData.email} onChange={handleChange} />
 
-                    <form>
+            <label>Phone</label>
+            <input name="telephone" value={formData.telephone} onChange={handleChange} />
 
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            placeholder="Enter doctor's name"
-                        />
+            <label>Specialite</label>
+            <input name="specialite" value={formData.specialite} onChange={handleChange} />
 
-
-                        <label>Specialty</label>
-                        <input
-                            type="text"
-                            placeholder="Enter specialty"
-                        />
-
-
-                        <label>Phone</label>
-                        <input
-                            type="text"
-                            placeholder="Enter phone number"
-                        />
-
-
-                        <button type="submit" className="add-btn">
-                            Save
-                        </button>
-
-
-                        <button 
-                            type="button"
-                            className="cancel-btn"
-                            onClick={() => setShowForm(false)}
-                        >
-                            Cancel
-                        </button>
-
-
-                    </form>
-
-                </div>
-
-
-            ) : (
-
-
-                // Your same table
-                <>
-
-                    <div className="table-header">
-
-                        <h2>Doctors</h2>
-
-                        <button 
-                            className="add-btn"
-                            onClick={() => setShowForm(true)}
-                        >
-                            <i className="fa-solid fa-plus"></i> Add Doctor
-                        </button>
-
-                    </div>
-
-
-                    <table>
-
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Specialty</th>
-                                <th>Phone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-
-
-                        <tbody>
-
-                        {doctors.map((doctor) => (
-
-                            <tr key={doctor.id}>
-
-                                <td>{doctor.id}</td>
-                                <td>{doctor.name}</td>
-                                <td>{doctor.specialty}</td>
-                                <td>{doctor.phone}</td>
-
-
-                                <td>
-
-                                    <button className="edit-btn">
-                                        <i className="fa-solid fa-pen"></i> Edit
-                                    </button>
-
-
-                                    <button className="delete-btn">
-                                        <i className="fa-solid fa-trash"></i> Delete
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                        </tbody>
-
-                    </table>
-
-                </>
-
-            )}
-
+            <button type="submit">Save</button>
+            <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
+          </form>
         </div>
+      ) : (
+        <>
+          <div className="table-header">
+            <h2>Doctors</h2>
+            <button onClick={() => setShowForm(true)}>Add Doctor</button>
+          </div>
 
-    );
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Specialty</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doctors.map((doctor) => (
+                <tr key={doctor.id}>
+                  <td>{doctor.id}</td>
+                  <td>{doctor.nom}</td>
+                  <td>{doctor.specialite}</td>
+                  <td>{doctor.email}</td>
+                  <td>{doctor.telephone}</td>
+                  <td>
+                    <button className="edit-btn" onClick={() => handleEdit(doctor)}>
+                      <i className="fa-solid fa-pen"></i> Edit
+                    </button>
+                    <button className="delete-btn" onClick={() => handleDelete(doctor)}>
+                      <i className="fa-solid fa-trash"></i> Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default Doctors;
