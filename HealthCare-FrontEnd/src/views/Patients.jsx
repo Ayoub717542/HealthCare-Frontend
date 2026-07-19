@@ -97,7 +97,7 @@ function Patients() {
         <> 
         <div className="table-header">
           <h2>Patients</h2>
-          <button onClick={() => setShowForm(true)}>Add Patient</button>
+          <button onClick={() => setShowForm(true)} className="add-btn" >Add Patient</button>
         </div>
           <table>
             <thead>
@@ -119,8 +119,12 @@ function Patients() {
                   <td>{patient.telephone}</td>
                   <td>{patient.dateNaissance}</td>
                   <td>
-                    <button onClick={() => handleEdit(patient)}>Edit</button>
-                    <button onClick={() => handleDelete(patient)}>Delete</button>
+                    <button className="edit-btn" onClick={() => handleEdit(patient)}>
+                            <i className="fa-solid fa-pen"></i> Edit
+                    </button>
+                     <button className="delete-btn" onClick={() => handleDelete(patient )}>
+                      <i className="fa-solid fa-trash"></i> Delete
+                    </button>
                   </td>
                 </tr>
               ))}

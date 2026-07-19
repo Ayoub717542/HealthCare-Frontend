@@ -94,7 +94,7 @@ function Doctors() {
         <>
           <div className="table-header">
             <h2>Doctors</h2>
-            <button onClick={() => setShowForm(true)}>Add Doctor</button>
+            <button onClick={() => setShowForm(true)} className="add-btn">Add Doctor</button>
           </div>
 
           <table>

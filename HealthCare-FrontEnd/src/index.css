@@ -233,14 +233,14 @@ body{
 }
 
 
-.doctors {
+.doctors, .patients {
     padding: 20px;
 }
 
 .table-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .add-btn,
