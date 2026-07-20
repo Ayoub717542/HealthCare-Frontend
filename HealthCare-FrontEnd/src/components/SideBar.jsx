@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink ,useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaUserInjured,
@@ -9,7 +9,14 @@ import {
   FaSignInAlt
 } from "react-icons/fa";
 
-function Sidebar({ open }) {
+function Sidebar({ open}) {
+const navigate = useNavigate()
+
+function Logout(){
+localStorage.removeItem("token");
+navigate("/login")
+}
+
   return (
     <aside className={`sidebar ${open ? "active" : ""}`}>
 
@@ -58,12 +65,11 @@ function Sidebar({ open }) {
           <FaSignInAlt />
           <span>LogIn</span>
         </NavLink>
-        <NavLink to="/logOut">
-          <FaSignInAlt />
-          <span>LogOut</span>
-        </NavLink>
+       <button onClick={Logout}>
+    <FaSignInAlt />
+    <span>Logout</span>
+      </button>
       </div>
-
     </aside>
   );
 }

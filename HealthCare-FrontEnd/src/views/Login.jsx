@@ -3,10 +3,9 @@ import api from "../service/api";
 import { NavLink ,useNavigate } from "react-router-dom";
 
 function Login() {
-  const navigate = useNavigate(); 
-
         const [username, setUsername] = useState("");
         const [password, setPassword] = useState("");
+        const navigate = useNavigate(); 
 
     const handleLogin = async (e) => {
     e.preventDefault();
