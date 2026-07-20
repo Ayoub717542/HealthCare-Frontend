@@ -11,30 +11,11 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import api from "./service/api";
 import Login from "./views/Login";
-
+import Register from "./views/Register"
 function App() {
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate(); 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
 
-    try {
-      const response = await api.post("/auth/login", {
-        username,
-        password,
-      });
-
-      localStorage.setItem("token", response.data.token);
-      navigate("/"); 
-    } catch (error) {
-      console.log(error); 
-      console.log(error.message);
-      console.log(error.response); 
-    }
-  };
 
   return (
       <div className="app">
@@ -46,19 +27,8 @@ function App() {
           <Header open={open} setOpen={setOpen} />
 
           <Routes>
-            <Route
-              path="/login"
-              element={
-                <Login
-                  handleLogin={handleLogin}
-                  username={username}
-                  password={password}
-                  setUsername={setUsername}
-                  setPassword={setPassword}
-                />
-              }
-            />
-
+            <Route path="/register" element={<Register></Register>}></Route>
+            <Route path="/login"element={<Login/>} />
             <Route path="/" element={<DashBoard />} />
             <Route path="/patients" element={<Patients />} />
             <Route path="/doctors" element={<Doctors />} />

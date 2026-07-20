@@ -58,6 +58,10 @@ function Sidebar({ open }) {
           <FaSignInAlt />
           <span>LogIn</span>
         </NavLink>
+        <NavLink to="/logOut">
+          <FaSignInAlt />
+          <span>LogOut</span>
+        </NavLink>
       </div>
 
     </aside>
