@@ -10,4 +10,5 @@ function ProtectedRoute(){
         <Outlet />
     )
 }
+
 export default ProtectedRoute
