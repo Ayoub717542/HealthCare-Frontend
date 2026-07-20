@@ -6,7 +6,8 @@ import {
   FaCalendarAlt,
   FaFolderOpen,
   FaInfoCircle,
-  FaSignInAlt
+  FaSignInAlt,
+  FaSignOutAlt 
 } from "react-icons/fa";
 
 function Sidebar({ open}) {
@@ -63,11 +64,11 @@ navigate("/login")
       <div className="bottom">
         <NavLink to="/login">
           <FaSignInAlt />
-          <span>LogIn</span>
+          <span>Login</span>
         </NavLink>
        <button onClick={Logout}>
-    <FaSignInAlt />
-    <span>Logout</span>
+        <FaSignOutAlt  />
+        <span>Logout</span>
       </button>
       </div>
     </aside>

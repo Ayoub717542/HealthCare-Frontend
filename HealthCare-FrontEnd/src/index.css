@@ -16,7 +16,76 @@ body{
     display:flex;
     min-height:100vh;
 }
+.auth-container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:80px;
+    background:#f8f8f8;
+}
 
+.auth-left{
+    width:300px;
+}
+
+.auth-left h1{
+    font-size:40px;
+    margin-bottom:15px;
+    color:#2c3e50;
+}
+
+.auth-left p{
+    color:gray;
+    margin-bottom:10px;
+}
+
+.auth-card{
+    width:350px;
+    padding:30px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+.auth-card p
+{
+    padding: 5px;
+}
+.auth-card h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+}
+
+
+
+.auth-form{
+    display:flex;
+    flex-direction:column;
+}
+
+.auth-form input{
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.auth-form button{
+    padding:10px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    background:#f4c08d;
+    cursor:pointer;
+}
+
+.auth-form a{
+    margin-top:15px;
+    text-align:center;
+    text-decoration:none;
+}
 .content{
     flex:1;
     display:flex;
@@ -68,7 +137,6 @@ body{
     cursor:pointer;
 }
 
-/* ================= SIDEBAR ================= */
 
 .sidebar{
     width:250px;
@@ -100,7 +168,7 @@ body{
     gap:8px;
 }
 
-.sidebar nav a{
+.sidebar nav a {
     display:flex;
     align-items:center;
     gap:12px;
@@ -130,23 +198,26 @@ body{
     padding-top:25px;
 }
 
-.bottom a{
+.bottom a,  
+.bottom button{
     display:flex;
     align-items:center;
     gap:12px;
-
     text-decoration:none;
-    color:#6b7280;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
 
+    color:#6b7280;
     padding:12px 15px;
     border-radius:10px;
 }
 
-.bottom a:hover{
+.bottom a:hover
+.bottom button:hover{
     background:#edf7f7;
 }
-
-/* ================= DASHBOARD ================= */
 
 .dashboard{
     flex:1;

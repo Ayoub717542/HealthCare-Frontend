@@ -1,5 +1,5 @@
 import { Route, Routes,useNavigate  } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DashBoard from "./views/DashBoard";
 import Patients from "./views/Patients";
 import Doctors from "./views/Doctors";
@@ -10,33 +10,50 @@ import NotFound from "./views/NotFound";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import api from "./service/api";
-import Login from "./views/Login";
-import Register from "./views/Register"
+import Login from "./auth/Login";
+import Register from "./auth/Register"
+import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+    if(token && username){
+      api.get(`/auth/userByName?username=${username}`)
+      .then((rs)=>{
+        setUser(rs.data);
+      })
+      .catch((error)=>{
+        console.log(error);
+        localStorage.removeItem("token");
+      })
+    }
+  },[]);
 
 
   return (
       <div className="app">
-
-        <Sidebar open={open} />
-
         <div className="content">
-
-          <Header open={open} setOpen={setOpen} />
-
           <Routes>
-            <Route path="/register" element={<Register></Register>}></Route>
-            <Route path="/login"element={<Login/>} />
-            <Route path="/" element={<DashBoard />} />
-            <Route path="/patients" element={<Patients />} />
-            <Route path="/doctors" element={<Doctors />} />
-            <Route path="/appointments" element={<Appointments />} />
-            <Route path="/medicalrecords" element={<MedicalRecords />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+<Route  element={<ProtectedRoute />}>
+
+            <Route path="/" element={<Layout />}>
+                <Route index element={<DashBoard />} />
+                <Route path="patients" element={<Patients />} />
+                <Route path="doctors" element={<Doctors />} />
+                <Route path="appointments" element={<Appointments />} />
+                <Route path="medicalrecords" element={<MedicalRecords />} />
+                <Route path="about" element={<About />} />
+                <Route path="*" element={<NotFound />} />
+            </Route>
+            
+</Route>
+        </Routes>
 
         </div>
       </div>

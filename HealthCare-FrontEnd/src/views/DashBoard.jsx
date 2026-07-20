@@ -13,7 +13,7 @@ function DashBoard() {
       <div className="cards">
 
         <div className="card">
-          <div className="icon"><i class="fa-solid fa-user-doctor"></i></div>
+          <div className="icon"><i className="fa-solid fa-user-doctor"></i></div>
           <h3>Doctors</h3>
           <span>25</span>
           <p>Manage doctors and their specialties.</p>

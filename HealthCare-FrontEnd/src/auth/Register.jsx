@@ -21,7 +21,7 @@ function Register(){
       });
 
       localStorage.setItem("token", response.data.token);
-      navigate("/login"); 
+      navigate("/login",{replace:true}); 
     } catch (error) {
       console.log(error); 
       console.log(error.message);
@@ -30,8 +30,21 @@ function Register(){
   };
     return(
        <>
-       <div>
-        <form onSubmit={handleRegister}>
+       <div className="auth-container">
+
+  <div className="auth-left">
+    <h1>Create Account</h1>
+    <p>Join HealthCare+ and start managing patients easily.</p>
+    <p>
+      Already have an account?
+      <NavLink to="/login"> Login</NavLink>
+    </p>
+  </div>
+
+  <div className="auth-card">
+
+      <div>
+        <form className="auth-form" onSubmit={handleRegister}>
                 <label>Username</label>
             <input 
             type="text" 
@@ -46,7 +59,7 @@ function Register(){
             value={email}
             onChange={(e)=>{setEmail(e.target.value)}}
             />
-                <label>Password</label>
+            <label>Password</label>
             <input 
             type="password" 
             name="password"
@@ -57,6 +70,12 @@ function Register(){
         </button>
         </form>
        </div>
+
+
+  </div>
+
+</div>
+       
        </> 
     )
 }
