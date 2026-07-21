@@ -41,7 +41,7 @@ function Sidebar({ open }) {
           <span>Appoinments</span>
         </NavLink>
 
-        <NavLink to="/records">
+        <NavLink to="/medicalrecords">
           <FaFolderOpen />
           <span>Medical Records</span>
         </NavLink>
