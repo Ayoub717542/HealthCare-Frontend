@@ -15,42 +15,42 @@ api.interceptors.request.use((config)=>{
 
     return config;
 
-});
+},
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 api.interceptors.response.use(
     (response) => {
+        console.log('Received Response:', response.status, response.config.url, response.data);
         return response;
     },
     (error) => {
-        if (!error.response) {
-            console.log("Network error, server unreachable:", error.message);
-            return Promise.reject(error);
-        }
-        
-  const status = error.response.status;
-
-        if (status === 400) {
-            console.log("Bad request (400):", error.response.data);
-        }
-        else if (status === 401) {
-            console.log("Unauthorized (401): removing session and redirecting");
+        if (error.response) {
+            switch (error.response.status){
+        case 401:
+            console.error('Authorization Failed: Redirecting to login page...');
             localStorage.removeItem("token");
             window.location.href = "/login";
-        }
-        else if (status === 403) {
-            console.log("Forbidden (403):", error.response.data);
-        }
-        else if (status === 404) {
-            console.log("Not found (404):", error.response.data);
-        }
-        else if (status === 500) {
-            console.log("Server error (500):", error.response.data);
-        }
-        else {
-            console.log(`Unexpected error (${status}):`, error.response.data);
+          break;
+        case 404:
+          console.error('Resource Not Found: The requested endpoint does not exist.');
+          break;
+        case 500:
+          console.error('Server Error: Something went wrong on the server.');
+          break;
+        default:
+          console.error(`Unhandled HTTP Error: Status ${error.response.status}`);
+          break;
+            }
+        }else if (error.request){
+             console.error('No response received from the server. Please check your network connection.');
+        }else{
+             console.error('Error setting up the request:', error.message);
         }
 
-        return Promise.reject(error);
+  return Promise.reject(error);
     }
 );
 
