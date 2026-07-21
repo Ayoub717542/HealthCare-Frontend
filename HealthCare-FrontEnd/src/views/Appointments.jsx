@@ -81,11 +81,11 @@ function Appointments(){
 
                         <label>Status</label>
                         <select name="statut" value={formData.statut} onChange={handleChange}>
-                            <option value=""> Select status </option>
-                            <option value="EN_ATTENTE">En attente</option>
-                            <option value="CONFIRME">Confirmé</option>
-                            <option value="ANNULE">Annulé</option>
-                            <option value="TERMINE">Terminé</option>
+                            <option value=""> Select status</option>
+                            <option value="EN_ATTENTE">On hold</option>
+                            <option value="CONFIRME">Confirmed</option>
+                            <option value="ANNULE">Canceled</option>
+                            <option value="TERMINE">Finished</option>
                         </select>
 
                         <button type="submit">Save</button>
@@ -117,7 +117,7 @@ function Appointments(){
                                 <td>{appointment.patient.prenom} {appointment.patient.nom}</td>
                                 <td>{appointment.medecine.nom}</td>
                                 <td>{appointment.dateRendezVous}</td>
-                                <td>{appointment.statut}</td>
+                                <td><span className={`status ${appointment.statut.toLowerCase()}`}>{appointment.statut}</span></td> 
                                 <td>
                                     <button className="edit-btn" onClick={() => handleEdit(appointment)}>
                                         <i className="fa-solid fa-pen"></i> Edit

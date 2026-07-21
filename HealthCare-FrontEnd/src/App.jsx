@@ -40,9 +40,18 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-<Route  element={<ProtectedRoute />}>
+            <Route  element={<ProtectedRoute />}>
 
-            <Route path="/" element={<Layout />}>
+                          <Route
+                    element={
+                      <Layout
+                        open={open}
+                        setOpen={setOpen}
+                        user={user}
+                      />
+                    }
+                  >
+
                 <Route index element={<DashBoard />} />
                 <Route path="patients" element={<Patients />} />
                 <Route path="doctors" element={<Doctors />} />

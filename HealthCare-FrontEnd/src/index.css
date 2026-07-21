@@ -314,26 +314,30 @@ body{
     padding: 10px;
 }
 
-.add-btn,
+.add-btn ,
 .edit-btn,
 .delete-btn {
     border: none;
     padding: 8px 12px;
+    border-radius: 2px;
     cursor: pointer;
 }
 
 .add-btn {
-    background: teal;
+    background: #0f766e;
     color: white;
+    border: none;
 }
 
 .edit-btn {
-    background: orange;
-}
+    background: #14b8a6;
+    color: white;
+    border: none;}
 
 .delete-btn {
-    background: red;
+    background: #dc2626;
     color: white;
+    border: none;
 }
 
 table {
@@ -352,6 +356,32 @@ td {
 th {
     background: teal;
     color: white;
+}
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.confirme {
+    background: #dcfce7;
+    color: #166534;
+}
+.status.termine{
+    background: #dcfce7;
+    color: #166534;
+
+}
+.status.en_attente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.annule {
+    background: #fee2e2;
+    color: #b91c1c;
 }
 .form-container{
     width:40%;
