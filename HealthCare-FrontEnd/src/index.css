@@ -233,7 +233,7 @@ body{
 }
 
 
-.doctors, .patients {
+.doctors, .patients , .recordes , .appointments {
     padding: 20px;
 }
 
