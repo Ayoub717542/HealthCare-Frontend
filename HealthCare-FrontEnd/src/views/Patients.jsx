@@ -1,7 +1,22 @@
 import { useEffect, useState } from "react";
+import MyProfile from "../views/MyProfile";
+import { getUserRole } from "../utils/auth";
 import api from "../service/api";
 
 function Patients() {
+  
+  const role= getUserRole();
+    if (role === "PATIENT") {
+    return <MyProfile />;
+  }
+
+  function fetchPatients(){
+    api.get("/patients/obtenirTousLesPatients").then((response) => {
+    setPatients(response.data);
+    });
+
+  }
+
   const [patients, setPatients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -13,12 +28,6 @@ function Patients() {
     dateNaissance: "",
   });
 
-  function fetchPatients(){
-    api.get("/patients/obtenirTousLesPatients").then((response) => {
-    setPatients(response.data);
-    });
-
-  }
     useEffect(() => {
         fetchPatients();
     }, []);

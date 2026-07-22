@@ -245,7 +245,6 @@ body{
     line-height:1.6;
 }
 
-/* Cards */
 
 .cards{
     display:grid;
@@ -256,11 +255,8 @@ body{
 .card{
     background:#fff;
     padding:22px;
-
     border-radius:15px;
-
     box-shadow:0 4px 12px rgba(0,0,0,.08);
-
     transition:.3s;
 }
 
@@ -271,17 +267,12 @@ body{
 .icon{
     width:45px;
     height:45px;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     background:#fde5cb;
-
     border-radius:10px;
-
     margin-bottom:15px;
-
     font-size:20px;
 }
 
@@ -319,8 +310,15 @@ body{
 .delete-btn {
     border: none;
     padding: 8px 12px;
-    border-radius: 2px;
+    border-radius: 10px;
     cursor: pointer;
+}
+
+.add-btn
+.edit-btn{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
 }
 
 .add-btn {
