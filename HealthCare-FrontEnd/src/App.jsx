@@ -14,6 +14,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register"
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PatientProfile from "./views/MyProfile"
 function App() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -40,8 +41,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route  element={<ProtectedRoute />}>
 
+            <Route  element={<ProtectedRoute />}>
                           <Route
                     element={
                       <Layout
@@ -58,6 +59,7 @@ function App() {
                 <Route path="appointments" element={<Appointments />} />
                 <Route path="medicalrecords" element={<MedicalRecords />} />
                 <Route path="about" element={<About />} />
+                <Route path ="/patientProfile" element={<PatientProfile></PatientProfile>}/>
                 <Route path="*" element={<NotFound />} />
             </Route>
             

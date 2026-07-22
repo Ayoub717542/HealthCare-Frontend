@@ -7,10 +7,14 @@ import {
   FaFolderOpen,
   FaInfoCircle,
   FaSignInAlt,
-  FaSignOutAlt 
+  FaSignOutAlt,
+  FaUserCircle 
 } from "react-icons/fa";
+import {getUserRole} from "../utils/auth"
+import { use } from "react";
+function Sidebar({open, user,setOpen}) {
 
-function Sidebar({open, user}) {
+  const userRole = getUserRole();
 
   return (
     <aside className={`sidebar ${open ? "active" : ""}`}>
@@ -23,32 +27,74 @@ function Sidebar({open, user}) {
 
       <nav>
 
-        <NavLink to="/">
+        <NavLink to="/" onClick={()=> setOpen(false)}>
           <FaHome />
           <span>DashBoard</span>
         </NavLink>
 
-        <NavLink to="/patients">
-          <FaUserInjured />
-          <span>Patients</span>
-        </NavLink>
+        {userRole ==="ADMIN" && (
+          <>
+          <NavLink to="/patients" onClick={() => setOpen(false)}>
+              <FaUserInjured />
+              <span>Patients</span>
+            </NavLink>
 
-        <NavLink to="/doctors">
+          <NavLink to="/doctors" onClick={()=> setOpen(false)}>
           <FaUserMd />
           <span>Doctors</span>
         </NavLink>
 
-        <NavLink to="/appointments">
+         <NavLink to="/appointments" onClick={()=> setOpen(false)}>
           <FaCalendarAlt />
           <span>Appoinments</span>
         </NavLink>
 
-        <NavLink to="/records">
+         <NavLink to="/records" onClick={()=> setOpen(false)}>
           <FaFolderOpen />
           <span>Medical Records</span>
         </NavLink>
+        
+          </>
+        )}
 
-        <NavLink to="/about">
+        { userRole ==="ADMIN" || userRole === "MEDECIN" && (
+<>
+          <NavLink to="/appointments" onClick={()=> setOpen(false)}>
+          <FaCalendarAlt />
+          <span>Appoinments</span>
+        </NavLink>
+         <NavLink to="/records" onClick={()=> setOpen(false)}>
+          <FaFolderOpen />
+          <span>Medical Records</span>
+        </NavLink>
+         <NavLink to="/about" onClick={()=> setOpen(false)}>
+          <FaInfoCircle />
+          <span>About</span>
+        </NavLink>
+</>
+ )}
+      {userRole === "PATIENT" && (
+        <>
+        <NavLink to="/patientProfile" onClick={()=> setOpen(false)} >
+       <FaUserCircle />
+        <span>Profile</span>
+       
+        </NavLink>
+
+        <NavLink to="/appointments" onClick={() => setOpen(false)}>
+              <FaCalendarAlt />
+              <span>My Appointments</span>
+        </NavLink>
+
+         <NavLink to="/records" onClick={() => setOpen(false)}>
+              <FaFolderOpen />
+              <span>My Medical Records</span>
+         </NavLink>
+
+        </>
+
+      )}
+          <NavLink to="/about" onClick={()=> setOpen(false)}>
           <FaInfoCircle />
           <span>About</span>
         </NavLink>

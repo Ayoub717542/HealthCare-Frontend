@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import MyProfile from "../views/MyProfile";
-import { getUserRole } from "../utils/auth";
 import api from "../service/api";
 
 function Patients() {
-  
-  const role= getUserRole();
-    if (role === "PATIENT") {
-    return <MyProfile />;
-  }
+
+
 
   function fetchPatients(){
     api.get("/patients/obtenirTousLesPatients").then((response) => {
@@ -103,7 +98,7 @@ function Patients() {
           </form>
         </div>
       ) : (
-        <> 
+        <>
         <div className="table-header">
           <h2>Patients</h2>
           <button onClick={() => setShowForm(true)} className="add-btn" >Add Patient</button>
@@ -127,6 +122,7 @@ function Patients() {
                   <td>{patient.email}</td>
                   <td>{patient.telephone}</td>
                   <td>{patient.dateNaissance}</td>
+                  
                   <td>
                     <button className="edit-btn" onClick={() => handleEdit(patient)}>
                             <i className="fa-solid fa-pen"></i> Edit

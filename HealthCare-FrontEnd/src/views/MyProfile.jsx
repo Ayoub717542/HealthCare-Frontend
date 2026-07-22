@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
+import { getUserRole } from "../utils/auth";
+
 
 function MyProfile() {
+  
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -18,10 +21,8 @@ function MyProfile() {
   }, []);
 
   function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData(
+        {...formData,[e.target.name]: e.target.value,});
   }
 
   function handleSubmit(e) {
@@ -32,7 +33,6 @@ function MyProfile() {
       alert("Profile updated!");
     });
   }
-
   return (
     <div className="patients">
       <div className="table-header">
@@ -68,12 +68,35 @@ function MyProfile() {
         </div>
       ) : (
         <div className="profile-view">
-          <p><strong>First Name:</strong> {formData.prenom}</p>
-          <p><strong>Last Name:</strong> {formData.nom}</p>
-          <p><strong>Email:</strong> {formData.email}</p>
-          <p><strong>Phone:</strong> {formData.telephone}</p>
-          <p><strong>Date of Birth:</strong> {formData.dateNaissance}</p>
+        <h2>{formData.nom} {formData.prenom} </h2>
+        
+        <div className="profile-info">
+            <p>
+            <strong>First Name: </strong>
+            <span>{formData.prenom}</span>
+            </p>
+
+            <p>
+            <strong>Last Name: </strong>
+            <span>{formData.nom}</span>
+            </p>
+
+            <p>
+            <strong>Email: </strong>
+            <span>{formData.email}</span>
+            </p>
+
+            <p>
+            <strong>Phone: </strong>
+            <span>{formData.telephone}</span>
+            </p>
+
+            <p>
+            <strong>Date of Birth: </strong>
+            <span>{formData.dateNaissance}</span>
+            </p>
         </div>
+</div>
       )}
     </div>
   );

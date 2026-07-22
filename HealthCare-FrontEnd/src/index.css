@@ -405,13 +405,35 @@ th {
     padding:.7rem;
 }
 
+
+
+.profile-view{
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+}
+.profile-view h2{
+    text-align: center;
+    padding: 6px;
+    background: #dcfce7 ;
+    color: #166534;
+    border-radius: 10px;
+    max-width: 20rem;
+}
+.profile-info p {
+ padding: 1rem;
+
+}
+
+
 @media(max-width:768px){
 
     .sidebar{
         position:fixed;
         left:-250px;
         top:0;
-
         transition:.3s;
         z-index:1000;
     }
@@ -431,5 +453,44 @@ th {
 
     .welcome p{
         max-width:100%;
+    }
+
+    .form-container{
+        width:90%;
+        padding:1.2rem;
+        margin:1rem auto;
+    }
+
+    .profile-view{
+        max-width:90%;
+        margin:0 auto;
+        padding:15px;
+    }
+
+    .auth-container{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+
+    .auth-left{
+        width:100%;
+        text-align:center;
+    }
+
+    .auth-card{
+        width:90%;
+    }
+.content{
+        min-width:0;
+    }
+    .Patients{
+        overflow-x:auto;
+    }
+   .doctors{
+        overflow-x:auto;
+    }
+    table{
+        min-width:600px;
     }
 }

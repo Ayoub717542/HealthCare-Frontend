@@ -113,7 +113,7 @@ function Appointments(){
                       <tbody>
                         {appointments.map((appointment) => (
                             <tr key={appointment.id}>
-                                <td>{appointment.id}</td>
+                                <td >{appointment.id}</td>
                                 <td>{appointment.patient.prenom} {appointment.patient.nom}</td>
                                 <td>{appointment.medecine.nom}</td>
                                 <td>{appointment.dateRendezVous}</td>
