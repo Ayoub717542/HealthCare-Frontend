@@ -1,4 +1,21 @@
+import { useEffect, useState } from "react";
+// import api from "../service/api";
+import axios from "axios";
+
 function DashBoard() {
+
+  // const [doctotCount,setDoctorCount]= useState(0);
+
+  // useEffect(() => {
+  //   axios.get("/doctors/count").then(response => 
+  //       {
+  //         setDoctorCount(response.data);
+  //       }
+  //   )
+
+  // },[])
+
+
   return (
     <div className="dashboard">
 
@@ -15,7 +32,7 @@ function DashBoard() {
         <div className="card">
           <div className="icon"><i class="fa-solid fa-user-doctor"></i></div>
           <h3>Doctors</h3>
-          <span>25</span>
+          <span>6</span>
           <p>Manage doctors and their specialties.</p>
         </div>
 
