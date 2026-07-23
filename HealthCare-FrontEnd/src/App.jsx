@@ -1,5 +1,5 @@
 import { Route, Routes,useNavigate  } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DashBoard from "./views/DashBoard";
 import Patients from "./views/Patients";
 import Doctors from "./views/Doctors";
@@ -17,8 +17,6 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); 
-
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -61,7 +59,7 @@ function App() {
               }
             />
 
-            <Route path="/" element={<DashBoard fetchPatients={fetchPatients} />} />
+            <Route path="/" element={<DashBoard />} />
             <Route path="/patients" element={<Patients />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="/appointments" element={<Appointments />} />
