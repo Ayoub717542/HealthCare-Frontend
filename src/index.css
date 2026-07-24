@@ -1,0 +1,496 @@
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f7f9fc;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+.auth-container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:80px;
+    background:#f8f8f8;
+}
+
+.auth-left{
+    width:300px;
+}
+
+.auth-left h1{
+    font-size:40px;
+    margin-bottom:15px;
+    color:#2c3e50;
+}
+
+.auth-left p{
+    color:gray;
+    margin-bottom:10px;
+}
+
+.auth-card{
+    width:350px;
+    padding:30px;
+    background:white;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+.auth-card p
+{
+    padding: 5px;
+}
+.auth-card h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+}
+
+
+
+.auth-form{
+    display:flex;
+    flex-direction:column;
+}
+
+.auth-form input{
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.auth-form button{
+    padding:10px;
+    margin-top:15px;
+    border:none;
+    border-radius:8px;
+    background:#f4c08d;
+    cursor:pointer;
+}
+
+.auth-form a{
+    margin-top:15px;
+    text-align:center;
+    text-decoration:none;
+}
+.content{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.header{
+    height:70px;
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    padding:0 30px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.admin{
+    font-weight:600;
+    color:#374151;
+}
+
+.logout-btn{
+    border:none;
+    background:#77aeb4;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#649ba1;
+}
+
+.nav-toggle{
+    display:none;
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+}
+
+
+.sidebar{
+    width:250px;
+    background:#fff;
+    border-right:1px solid #e5e7eb;
+
+    display:flex;
+    flex-direction:column;
+
+    padding:25px 18px;
+}
+
+.logo{
+    margin-bottom:35px;
+}
+
+.logo h2{
+    font-size:30px;
+    color:#23314d;
+}
+
+.logo span{
+    color:#f0ab63;
+}
+
+.sidebar nav{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.sidebar nav a {
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    text-decoration:none;
+    color:#6b7280;
+
+    padding:12px 15px;
+    border-radius:10px;
+
+    transition:.3s;
+}
+
+.sidebar nav a:hover{
+    background:#edf7f7;
+    color:#5b9ca2;
+}
+
+.sidebar nav a.active{
+    background:#8fb9bd;
+    color:#fff;
+    font-weight:bold;
+}
+
+.bottom{
+    margin-top:auto;
+    padding-top:25px;
+}
+
+.bottom a,  
+.bottom button{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+
+    color:#6b7280;
+    padding:12px 15px;
+    border-radius:10px;
+}
+
+.bottom a:hover
+.bottom button:hover{
+    background:#edf7f7;
+}
+
+.dashboard{
+    flex:1;
+    padding:35px;
+    background:#f7f9fc;
+}
+
+.welcome{
+    background:linear-gradient(135deg,#8fc3c7,#699ea8);
+    color:#fff;
+
+    padding:35px;
+
+    border-radius:18px;
+    margin-bottom:30px;
+}
+
+.welcome h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.welcome p{
+    max-width:600px;
+    line-height:1.6;
+}
+
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    padding:22px;
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    width:45px;
+    height:45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fde5cb;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.card h3{
+    color:#23314d;
+    margin-bottom:10px;
+}
+
+.card span{
+    display:block;
+    font-size:28px;
+    color:#699ea8;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#6b7280;
+    line-height:1.5;
+}
+
+
+.doctors, .patients {
+    padding: 20px;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.add-btn ,
+.edit-btn,
+.delete-btn {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.add-btn
+.edit-btn{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.add-btn {
+    background: #0f766e;
+    color: white;
+    border: none;
+}
+
+.edit-btn {
+    background: #14b8a6;
+    color: white;
+    border: none;}
+
+.delete-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: teal;
+    color: white;
+}
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.confirme {
+    background: #dcfce7;
+    color: #166534;
+}
+.status.termine{
+    background: #dcfce7;
+    color: #166534;
+
+}
+.status.en_attente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.annule {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+.form-container{
+    width:40%;
+    margin:2rem auto;
+    padding:2rem;
+    background:white;
+    box-shadow:0 0 10px #ccc;
+    border-radius:8px;
+}
+
+.form-container form{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+}
+
+.form-container input{
+    padding:.7rem;
+    border:1px solid #ccc;
+}
+
+.form-container button{
+    padding:.7rem;
+}
+
+
+
+.profile-view{
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+}
+.profile-view h2{
+    text-align: center;
+    padding: 6px;
+    background: #dcfce7 ;
+    color: #166534;
+    border-radius: 10px;
+    max-width: 20rem;
+}
+.profile-info p {
+ padding: 1rem;
+
+}
+
+
+@media(max-width:768px){
+
+    .sidebar{
+        position:fixed;
+        left:-250px;
+        top:0;
+        transition:.3s;
+        z-index:1000;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+    .nav-toggle{
+        display:block;
+        margin-right:auto;
+    }
+
+    .header{
+        justify-content:space-between;
+    }
+
+    .welcome p{
+        max-width:100%;
+    }
+
+    .form-container{
+        width:90%;
+        padding:1.2rem;
+        margin:1rem auto;
+    }
+
+    .profile-view{
+        max-width:90%;
+        margin:0 auto;
+        padding:15px;
+    }
+
+    .auth-container{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+
+    .auth-left{
+        width:100%;
+        text-align:center;
+    }
+
+    .auth-card{
+        width:90%;
+    }
+.content{
+        min-width:0;
+    }
+    .Patients{
+        overflow-x:auto;
+    }
+   .doctors{
+        overflow-x:auto;
+    }
+    table{
+        min-width:600px;
+    }
+}
