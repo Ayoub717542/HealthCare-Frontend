@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
+import {useForm} from "react-hook-form";
 
 function Patients() {
 
@@ -15,45 +16,34 @@ function Patients() {
   const [patients, setPatients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    dateNaissance: "",
-  });
 
-    useEffect(() => {
-        fetchPatients();
-    }, []);
+  const {register,handleSubmit,reset} = useForm();
 
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
+  function onSubmit(data){
 
-  function handleSubmit(e) {
-    if(editingId){
-        e.preventDefault();
-        api.put(`/patients/modifier/${editingId}`, formData).then(() => {
+     if(editingId){
+        api.put(`/patients/modifier/${editingId}`, data).then(() => {
         setShowForm(false);
         setEditingId(null);
+        reset();
         fetchPatients();
     });
 
     }else{
-         e.preventDefault();
-         api.post("/patients/ajouterPatient", formData).then(() => {
+         api.post("/patients/ajouterPatient", data).then(() => {
          setShowForm(false);
+         reset();
          fetchPatients();
     });
     }
-   
   }
+
+    useEffect(() => {
+        fetchPatients();
+    }, []);
+    
     function handleEdit(patient){
-        setFormData({
+        reset({
         nom: patient.nom,
         prenom: patient.prenom,
         email: patient.email,
@@ -71,27 +61,35 @@ function Patients() {
             fetchPatients();
         })
   }
-
   return (
+    <>  
     <div className="patients">
       {showForm ? (
         <div className="form-container">
           <h2>Add Patient</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            
             <label>First Name</label>
-            <input name="prenom" value={formData.prenom} onChange={handleChange} />
-
+            <input 
+            {...register("prenom")}
+            type="text"
+            />
             <label>Last Name</label>
-            <input name="nom" value={formData.nom} onChange={handleChange} />
+            <input {...register("nom")} 
+            type="text" />
 
             <label>Email</label>
-            <input name="email" value={formData.email} onChange={handleChange} />
+            <input {...register("email")}
+            type="email"
+            />
 
             <label>Phone</label>
-            <input name="telephone" value={formData.telephone} onChange={handleChange} />
+            <input {...register("telephone")}
+            type="text" />
 
             <label>Date of Birth</label>
-            <input type="date" name="dateNaissance" value={formData.dateNaissance} onChange={handleChange} />
+            <input {...register("dateNaissance")}
+            type="date"/>
 
             <button type="submit">Save</button>
             <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
@@ -138,7 +136,7 @@ function Patients() {
         </>
       )}
     </div>
-  );
+  </> );
 }
 
 export default Patients;

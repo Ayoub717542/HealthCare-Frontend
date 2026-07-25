@@ -22,6 +22,7 @@ function App() {
   useEffect(()=>{
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
+
     if(token && username){
       api.get(`/auth/userByName?username=${username}`)
       .then((rs)=>{
@@ -33,7 +34,6 @@ function App() {
       })
     }
   },[]);
-
 
   return (
       <div className="app">
@@ -65,6 +65,7 @@ function App() {
             
 </Route>
         </Routes>
+
 
         </div>
       </div>
