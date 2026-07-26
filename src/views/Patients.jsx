@@ -4,8 +4,6 @@ import {useForm} from "react-hook-form";
 
 function Patients() {
 
-
-
   function fetchPatients(){
     api.get("/patients/obtenirTousLesPatients").then((response) => {
     setPatients(response.data);

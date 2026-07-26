@@ -86,6 +86,25 @@ body{
     text-align:center;
     text-decoration:none;
 }
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-container button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .content{
     flex:1;
     display:flex;

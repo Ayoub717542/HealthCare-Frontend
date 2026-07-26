@@ -1,0 +1,15 @@
+services:
+
+  frontend:
+    # Build the production Docker image using the Dockerfile
+    build: .
+
+    # Give the container a name
+    container_name: healthcare_frontend
+
+    # Map port 80 inside the container to port 8080 on the host machine
+    ports:
+      - "8081:80"
+
+    # Restart the container automatically if it stops
+    restart: unless-stopped

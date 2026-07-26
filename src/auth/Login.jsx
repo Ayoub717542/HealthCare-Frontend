@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import api from "../service/api";
 import { NavLink ,useNavigate } from "react-router-dom";
 
 function Login() {
         const [username, setUsername] = useState("");
         const [password, setPassword] = useState("");
+        const [showPassword, setShowPassword] = useState(false);
         const navigate = useNavigate(); 
 
     const handleLogin = async (e) => {
@@ -54,15 +56,21 @@ function Login() {
             value={username}
             onChange={(e)=>setUsername(e.target.value)}
           />
-
+          <div className="password-container">
           <label>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
+          <input 
+            type={showPassword ? "text" : "password"}
+            placeholder="Password..."
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
           />
-
+            <button
+          onClick={()=>setShowPassword(!showPassword)}
+          >
+            {showPassword ?<FaEyeSlash /> : <FaEye />}
+          </button>
+          </div>
+         
           <button type="submit">
             Login
           </button>
