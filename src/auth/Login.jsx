@@ -11,16 +11,15 @@ function Login() {
 
     const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const response = await api.post("/auth/login", {
         username,
         password,
       });
-
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("username", response.data.username);
       navigate("/",{replace:true}); 
+
     } catch (error) {
       console.log(error); 
       console.log(error.message);
@@ -65,6 +64,7 @@ function Login() {
             onChange={(e)=>setPassword(e.target.value)}
           />
             <button
+          type="button"
           onClick={()=>setShowPassword(!showPassword)}
           >
             {showPassword ?<FaEyeSlash /> : <FaEye />}
