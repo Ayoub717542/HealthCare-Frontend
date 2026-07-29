@@ -31,6 +31,7 @@ function Sidebar({open, user,setOpen}) {
           <FaHome />
           <span>DashBoard</span>
         </NavLink>
+        
         {userRole ==="ADMIN" && (
           <>
           <NavLink to="/patients" onClick={() => setOpen(false)}>

@@ -110,7 +110,11 @@ body{
     display:flex;
     flex-direction:column;
 }
-
+.error-text{
+    color: rgb(210, 3, 3);
+    font-weight: bold;
+    font-size: small;
+}
 .header{
     height:70px;
     background:#fff;

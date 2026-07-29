@@ -23,3 +23,4 @@ export function getUserRole() {
 
   return null;
 }
+export default getUserRole;
