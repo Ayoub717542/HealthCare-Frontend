@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
+  const [doctorsRendezVous, setdoctorsRendezVous] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -15,10 +16,14 @@ function Doctors() {
     });
   }
 
+  function getAllMedecinRendesVous(){
+    api.get("/medecine/getAllMedecinRendesVous").then((response) =>{
+      setdoctorsRendezVous(response.data.content);
+    })
+  }
   useEffect(() => {
     fetchDoctors();
   }, []);
-
 
   function OnSubmit(data) {
 

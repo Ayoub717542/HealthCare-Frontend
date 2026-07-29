@@ -52,7 +52,6 @@ function App() {
                       />
                     }
                   >
-
                 <Route index element={<DashBoard />} />
                 <Route path="patients" element={<Patients />} />
                 <Route path="doctors" element={<Doctors />} />

@@ -6,7 +6,7 @@ export function getUserRole() {
   if (!token) {
     return null;
   }
-
+  
   const decoded = jwtDecode(token);
 
     if (decoded.authorities.includes("ROLE_PATIENT")) {
