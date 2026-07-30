@@ -15,12 +15,7 @@ function Doctors() {
       setDoctors(response.data.content);
     });
   }
-
-  function getAllMedecinRendesVous(){
-    api.get("/medecine/getAllMedecinRendesVous").then((response) =>{
-      setdoctorsRendezVous(response.data.content);
-    })
-  }
+  
   useEffect(() => {
     fetchDoctors();
   }, []);
