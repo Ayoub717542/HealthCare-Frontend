@@ -136,5 +136,4 @@ function Patients() {
     </div>
   </> );
 }
-
 export default Patients;

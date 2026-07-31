@@ -43,7 +43,7 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             <Route  element={<ProtectedRoute />}>
-                          <Route
+            <Route
                     element={
                       <Layout
                         open={open}
@@ -59,7 +59,7 @@ function App() {
                 <Route path="medicalrecords" element={<MedicalRecords />} />
                 <Route path="about" element={<About />} />
                 <Route path ="/patientProfile" element={<PatientProfile></PatientProfile>}/>
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} /> 
             </Route>
             
 </Route>
