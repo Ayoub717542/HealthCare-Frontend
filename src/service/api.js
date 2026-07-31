@@ -22,7 +22,6 @@ api.interceptors.request.use((config)=>{
 
 // response interceptor to handle errors runs whenever an Api receives a responce;
 
-
 api.interceptors.response.use(
   //if the request is successfull
     (response) => {

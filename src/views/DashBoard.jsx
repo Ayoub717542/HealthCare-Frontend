@@ -32,7 +32,6 @@ function DashBoard() {
   });
 }, []);
 
-
   return (
     <div className="dashboard">
       <div className="welcome">
@@ -42,7 +41,7 @@ function DashBoard() {
         <p>
           Manage your healthcare platform from one place. You can manage patients, doctors, appointments, and medical records.
         </p>
-             <div className="cards">
+        <div className="cards">
         <div className="card">
           <div className="icon"><i className="fa-solid fa-user-doctor"></i></div>
           <h3>Doctors</h3>
@@ -74,12 +73,13 @@ function DashBoard() {
       </div>
           </>
         )}
+        
            {userRole ==="MEDECIN" && (
           <>
             <h1>Welcome back, Doctor {username}</h1>
         <p>
               Manage your appointments and follow your patients' medical information from your dashboard.</p>
-              
+
       <div className="cards">
         <div className="card">
           <div className="icon"><i className="fa-solid fa-hospital-user"></i></div>
