@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
@@ -28,6 +30,7 @@ function Doctors() {
         setEditingId(null);
         reset();
         fetchDoctors();
+        toast.success("Doctor successfully edited!")
 
       });
     } else {
@@ -35,6 +38,7 @@ function Doctors() {
         setShowForm(false);
         reset();
         fetchDoctors();
+        toast.success("Doctor successfully added!")
         
       });
     }
@@ -49,6 +53,7 @@ function Doctors() {
     });
     setEditingId(medecine.id);
     setShowForm(true);
+
   }
 
   function handleDelete(medecine) {
@@ -56,6 +61,7 @@ function Doctors() {
     if (!sure) return;
     api.delete(`/medecine/supprimer/${medecine.id}`).then(() => {
       fetchDoctors();
+      toast.success("Doctor deleted successfully!")
     });
   }
 

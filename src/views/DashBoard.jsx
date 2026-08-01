@@ -73,7 +73,7 @@ function DashBoard() {
       </div>
           </>
         )}
-        
+
            {userRole ==="MEDECIN" && (
           <>
             <h1>Welcome back, Doctor {username}</h1>
@@ -103,8 +103,7 @@ function DashBoard() {
         </div>
 
       </div>
-          </>
-          
+          </>          
         )}
            {userRole ==="PATIENT" && (
           <>
