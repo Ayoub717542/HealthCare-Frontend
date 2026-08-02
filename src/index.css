@@ -450,6 +450,32 @@ th {
 
 }
 
+.patient-details {
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.patient-details h1 {
+    color: #23314d;
+    margin-bottom: 20px;
+}
+
+.patient-details h2 {
+    background: #edf7f7;
+    color: #699ea8;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.patient-details p {
+    padding: 6px;
+    color: #6b7280;
+}
 
 @media(max-width:768px){
 

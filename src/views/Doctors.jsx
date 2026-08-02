@@ -43,7 +43,6 @@ function Doctors() {
       });
     }
   }
-
   function handleEdit(medecine) {
     reset({
       nom: medecine.nom,
@@ -53,7 +52,6 @@ function Doctors() {
     });
     setEditingId(medecine.id);
     setShowForm(true);
-
   }
 
   function handleDelete(medecine) {

@@ -23,14 +23,14 @@ const navigate = useNavigate();
   const {register,handleSubmit,reset} = useForm();
 
   const filterByName = [...patients]
-  .filter((patient) => patient.nom.toLowerCase().includes(search.toLocaleLowerCase()))
+  .filter((patient) => (patient.nom || "").toLowerCase().includes(search.toLowerCase()))
   .sort((a, b) => {
     if (sortOrder === "asc") {
-      return a.nom.localeCompare(b.nom);
+      return (a.nom || "").localeCompare(b.nom || "");
     }
 
     if (sortOrder === "desc") {
-      return b.nom.localeCompare(a.nom);
+      return (b.nom|| "").localeCompare(a.nom || "");
     }
     return 0;
   });
@@ -46,7 +46,7 @@ const navigate = useNavigate();
         toast.success("Patient updated successfully!");
     })
       .catch(() => {
-        toast.error("An error occurred while updating the patient.");
+        toast.error("c.");
       });
     
 
@@ -55,7 +55,7 @@ const navigate = useNavigate();
          setShowForm(false);
          reset();
          fetchPatients();
-        toast.success("Patient added successfully!");
+         toast.success("Patient added successfully!");
     })
     .catch(() => {
         toast.error("An error occurred while adding the patient.");

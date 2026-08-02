@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+
 
 function MedicalRecords(){
 
   const [recordes, setRecordes] = useState([]);
+  const [showForm,setShowForm] = useState(false);
+  const {register, handleSubmit}= useForm();
 
    function fetchMedicalRecords() {
     api.get("/DossierMedical/getAllDossierMedical")
@@ -12,15 +17,38 @@ function MedicalRecords(){
         })
         .catch((error) => {
             console.log(error);
+            toast.error("An error occurred while fetching Medical recores ")
         });
 }
-    useEffect(()=>{
+ useEffect(()=>{
         fetchMedicalRecords()
     },[]);
-    return(
-        <>
-        <div className="recordes">
 
+
+    return(
+ <>
+{ showForm ? (
+    <div className="form-container">
+          <h2>Add a Medical Recorde</h2>
+          <form onSubmit={handleSubmit(OnSubmit)}>
+            <label>diagnostic</label>
+            <input type="text"  {...register("diagnostic")} />
+
+            <label>observations</label>
+            <input type="text"  {...register("observations")} />
+
+            <label>dateCreation</label>
+            <input type="date" {...register("dateCreation")} />
+
+            <label>patientId</label>
+            <input type="number" {...register("patientId")} />
+
+            <button type="submit">Save</button>
+            <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
+          </form>
+        </div>
+):(
+  <div className="recordes">
        
        <div className="table-header">
        <h2>Medical Recoreds</h2>
@@ -63,6 +91,11 @@ function MedicalRecords(){
        </table>
         </div>
 
+)
+}
+
+
+      
 </>
     )
 }
