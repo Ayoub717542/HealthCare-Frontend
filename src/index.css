@@ -86,12 +86,35 @@ body{
     text-align:center;
     text-decoration:none;
 }
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-container button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .content{
     flex:1;
     display:flex;
     flex-direction:column;
 }
-
+.error-text{
+    color: rgb(210, 3, 3);
+    font-weight: bold;
+    font-size: small;
+}
 .header{
     height:70px;
     background:#fff;
@@ -295,7 +318,7 @@ body{
 }
 
 
-.doctors, .patients {
+.doctors, .patients , .recordes , .appointments {
     padding: 20px;
 }
 
@@ -427,6 +450,32 @@ th {
 
 }
 
+.patient-details {
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.patient-details h1 {
+    color: #23314d;
+    margin-bottom: 20px;
+}
+
+.patient-details h2 {
+    background: #edf7f7;
+    color: #699ea8;
+    padding: 8px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.patient-details p {
+    padding: 6px;
+    color: #6b7280;
+}
 
 @media(max-width:768px){
 

@@ -26,12 +26,10 @@ function Sidebar({open, user,setOpen}) {
       </div>
 
       <nav>
-
         <NavLink to="/" onClick={()=> setOpen(false)}>
           <FaHome />
           <span>DashBoard</span>
         </NavLink>
-
         {userRole ==="ADMIN" && (
           <>
           <NavLink to="/patients" onClick={() => setOpen(false)}>
@@ -45,15 +43,19 @@ function Sidebar({open, user,setOpen}) {
         </NavLink>
 
          <NavLink to="/appointments" onClick={()=> setOpen(false)}>
+
           <FaCalendarAlt />
           <span>Appoinments</span>
         </NavLink>
-
          <NavLink to="/records" onClick={()=> setOpen(false)}>
           <FaFolderOpen />
           <span>Medical Records</span>
         </NavLink>
-        
+          </>
+        )}
+
+        {userRole==="MEDECIN"  &&(
+          <>
           </>
         )}
 
@@ -66,10 +68,6 @@ function Sidebar({open, user,setOpen}) {
          <NavLink to="/records" onClick={()=> setOpen(false)}>
           <FaFolderOpen />
           <span>Medical Records</span>
-        </NavLink>
-         <NavLink to="/about" onClick={()=> setOpen(false)}>
-          <FaInfoCircle />
-          <span>About</span>
         </NavLink>
 </>
  )}
@@ -102,7 +100,8 @@ function Sidebar({open, user,setOpen}) {
       </nav>
 
       <div className="bottom">
-        <div>
+
+         <div>
           <small>{user?.username}</small>
         </div>
       </div>

@@ -1,12 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 
 export function getUserRole() {
+  
   const token = localStorage.getItem("token");
 
   if (!token) {
     return null;
   }
-
   const decoded = jwtDecode(token);
 
     if (decoded.authorities.includes("ROLE_PATIENT")) {
@@ -23,3 +23,4 @@ export function getUserRole() {
 
   return null;
 }
+export default getUserRole;

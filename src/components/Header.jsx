@@ -1,19 +1,17 @@
 import { Navigate, useNavigate } from "react-router-dom";
 
 function Header({ open, setOpen }) {
-
   const username = localStorage.getItem("username")
-  
   const navigate = useNavigate()
 
   function Logout(){
-  localStorage.removeItem("token");
-  navigate("/login")
+    localStorage.clear();
+    navigate("/login", { replace: true });
   }
 
   return (
     <header className="header">
-
+      
       <button
         className="nav-toggle"
         onClick={() => setOpen(!open)}

@@ -1,38 +1,42 @@
 import axios from "axios";
-export const baseURL  = "http://localhost:8080/api"
 
+// Axios instence Configuration 
 export const api = axios.create({
-  baseURL : baseURL
+  baseURL : "http://localhost:8080/api"
 });
 
+
+// Axios interceptors Request Config to add access token to every Reaquest:
 api.interceptors.request.use((config)=>{
-
-    const token = localStorage.getItem("token");
-
-    if(token){
+    const token = localStorage.getItem("token"); // to get access token from the LocalStorage that i have saved it earlier in the handleLogin
+    if(token){// if the access token true it added to the Bearer token 
         config.headers.Authorization = `Bearer ${token}`;
     }
-
     return config;
-
 },
   (error) => {
+    console.error("Request error ::", error);
     return Promise.reject(error);
   }
 );
 
+// response interceptor to handle errors runs whenever an Api receives a responce;
+
 api.interceptors.response.use(
+  //if the request is successfull
     (response) => {
         console.log('Received Response:', response.status, response.config.url, response.data);
         return response;
     },
+    //if it fails
     (error) => {
         if (error.response) {
+        //check the HTTP status weather its 401 or 404...
             switch (error.response.status){
         case 401:
-            console.error('Authorization Failed: Redirecting to login page...');
+            console.error('Authorization Failed...');
             localStorage.removeItem("token");
-            window.location.href = "/login";
+            window.location.replace("/login");
           break;
         case 404:
           console.error('Resource Not Found: The requested endpoint does not exist.');
@@ -53,5 +57,4 @@ api.interceptors.response.use(
   return Promise.reject(error);
     }
 );
-
 export default api;

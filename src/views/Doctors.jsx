@@ -1,56 +1,51 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
 
 function Doctors() {
   const [doctors, setDoctors] = useState([]);
+  const [doctorsRendezVous, setdoctorsRendezVous] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    specialite: "",
-  });
+
+  const {register,reset,handleSubmit} = useForm(); 
 
   function fetchDoctors() {
     api.get("/medecine/getMedecinePagination").then((response) => {
       setDoctors(response.data.content);
     });
   }
-
+  
   useEffect(() => {
     fetchDoctors();
   }, []);
 
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault(); 
+  function OnSubmit(data) {
 
     if (editingId) {
-      api.put(`/medecine/modifier/${editingId}`, formData).then(() => {
+      api.put(`/medecine/modifier/${editingId}`, data).then(() => {
         setShowForm(false);
         setEditingId(null);
+        reset();
         fetchDoctors();
+        toast.success("Doctor successfully edited!")
+
       });
     } else {
-      api.post("/medecine/ajouterMedecin", formData).then(() => {
+      api.post("/medecine/ajouterMedecin", data).then(() => {
         setShowForm(false);
+        reset();
         fetchDoctors();
+        toast.success("Doctor successfully added!")
+        
       });
     }
   }
-
   function handleEdit(medecine) {
-    setFormData({
+    reset({
       nom: medecine.nom,
-      prenom: medecine.prenom,
       email: medecine.email,
       telephone: medecine.telephone,
       specialite: medecine.specialite,
@@ -64,6 +59,7 @@ function Doctors() {
     if (!sure) return;
     api.delete(`/medecine/supprimer/${medecine.id}`).then(() => {
       fetchDoctors();
+      toast.success("Doctor deleted successfully!")
     });
   }
 
@@ -72,19 +68,20 @@ function Doctors() {
       {showForm ? (
         <div className="form-container">
           <h2>Add Doctor</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(OnSubmit)}>
+             {/* wehnever this form has submited its gonna first call the submit handler function which comes from react hook form .   */}
 
             <label>Full Name</label>
-            <input name="nom" value={formData.nom} onChange={handleChange} />
+            <input type="text"  {...register("nom")} />
 
             <label>Email</label>
-            <input name="email" value={formData.email} onChange={handleChange} />
+            <input type="email"  {...register("email")} />
 
             <label>Phone</label>
-            <input name="telephone" value={formData.telephone} onChange={handleChange} />
+            <input type="text" {...register("telephone")} />
 
             <label>Specialite</label>
-            <input name="specialite" value={formData.specialite} onChange={handleChange} />
+            <input type="text" {...register("specialite")} />
 
             <button type="submit">Save</button>
             <button type="button" onClick={() => setShowForm(false)}>Cancel</button>

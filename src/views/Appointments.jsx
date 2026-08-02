@@ -1,56 +1,48 @@
 import { useEffect, useState } from "react"
 import api from "../service/api"
+import { useForm } from "react-hook-form";
 
 function Appointments(){
     const [appointments, setAppointments] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState(null);
-    const [formData, setFormData] = useState({
-        dateRendezVous: "",
-        statut: "",
-        medecinId: "",
-        patientId: ""
-    });
+
+    const {register, reset,handleSubmit,formState:{ errors }} = useForm();
+    
 
     function fetchAppointments(){
         api.get("/RendezVous/obtenirTousLesRendezVous").then((response) => {
             setAppointments(response.data.content ?? response.data)
         })
     }
-
     useEffect(() => {
         fetchAppointments();
     }, []);
 
-    function handleChange(e){
-        setFormData({
-            ...formData,[e.target.name]: e.target.value,
-        })
-    }
-
-    function handleSubmit(e){
-        e.preventDefault();
+    function onSubmit(data){
         if (editingId) {
-            api.put(`/RendezVous/modifier/${editingId}`, formData).then(() => {
+            api.put(`/RendezVous/modifier/${editingId}`, data).then(() => {
                 setShowForm(false);
                 setEditingId(null);
+                reset();
                 fetchAppointments();
             });
         } else {
-            api.post("/RendezVous/ajouterRendezVous", formData).then(() => {
+            api.post("/RendezVous/ajouterRendezVous", data).then(() => {
                 setShowForm(false);
+                reset();
                 fetchAppointments();
             })
         }
     }
 
     function handleEdit(appointment){
-        setFormData({
-            dateRendezVous: appointment.dateRendezVous,
-            statut: appointment.statut,
-            medecinId: appointment.medecine.id,  
-            patientId: appointment.patient.id,
-        });
+reset({
+        dateRendezVous: appointment.dateRendezVous,
+        statut: appointment.statut,
+        medecinId: appointment.medecine.id,
+        patientId: appointment.patient.id
+    });
         setEditingId(appointment.id);
         setShowForm(true);
     }
@@ -68,26 +60,42 @@ function Appointments(){
             {showForm ? (
                 <div className="form-container">
                     <h2>{editingId ? "Edit Appointment" : "Add Appointment"}</h2>
-                    <form onSubmit={handleSubmit}>
 
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <label>Patient ID</label>
-                        <input name="patientId" value={formData.patientId} onChange={handleChange} />
-
+                        <input {...register("patientId",{
+                            required:"patient ID Is required !",
+                            valueAsNumber: true
+                        })} 
+                        type="Number"
+                    
+/>
+                    {errors.patientId &&(<p className="error-text">{errors.patientId.message}</p>)}
                         <label>Doctor ID</label>
-                        <input name="medecinId" value={formData.medecinId} onChange={handleChange} />
-
-                        <label>Date</label>
-                        <input type="date" name="dateRendezVous" value={formData.dateRendezVous} onChange={handleChange} />
+                        <input {...register("medecinId",{
+                            required:"doctor Id is required",
+                        })} 
+                        type="number"
+                        />
+                    {errors.DoctorId &&(<p className="error-text">{errors.DoctorId.message}</p>)}
+                        <label>Appiontment date</label>
+                        <input 
+                        {...register("dateRendezVous",{
+                            required:"date is required",
+                        })}
+                        type="date"
+                        />
+                     {errors.date &&(<p className="error-text">{errors.date.message}</p>)}
 
                         <label>Status</label>
-                        <select name="statut" value={formData.statut} onChange={handleChange}>
+                        <select {...register("statut",{required:"statuts is required"})}>
                             <option value=""> Select status</option>
                             <option value="EN_ATTENTE">On hold</option>
                             <option value="CONFIRME">Confirmed</option>
                             <option value="ANNULE">Canceled</option>
                             <option value="TERMINE">Finished</option>
                         </select>
-
+                 {errors.status &&(<p className="error-text">{errors.status.message}</p>)}
                         <button type="submit">Save</button>
                         <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
                     </form>
