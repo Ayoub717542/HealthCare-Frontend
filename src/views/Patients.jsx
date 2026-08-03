@@ -33,8 +33,6 @@ const navigate = useNavigate();
   }
   {/* the problem here is that if we call normal use effect every key we type in the search bow it calls the backend immidiatly that is lots of requests so the solusion is to add timeOut debounced useEffect*/}
 
-
-
     useEffect(() => { 
       const timer = setTimeout(()=>{  {/*we wait a biit after the user stop typing so we wait 500 then we call fetchPatients */}
       fetchPatients();
@@ -149,6 +147,7 @@ const navigate = useNavigate();
           <option value="asc">A → Z</option>
           <option value="desc">Z → A</option>
         </select>
+        
       </div>
         <div className="table-header">
           <h2>Patients</h2>
