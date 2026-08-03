@@ -24,7 +24,7 @@ function PatientDetails() {
 useEffect(() => {
     if(patient){
           api.get(`/DossierMedical/${patient.id}`)
-    .then((response) => {
+          .then((response) => {
         setRecord(response.data);
     })
     .catch((error) => {

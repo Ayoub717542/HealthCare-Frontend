@@ -47,7 +47,7 @@ function Sidebar({open, user,setOpen}) {
           <FaCalendarAlt />
           <span>Appoinments</span>
         </NavLink>
-         <NavLink to="/records" onClick={()=> setOpen(false)}>
+         <NavLink to="/medicalrecords" onClick={()=> setOpen(false)}>
           <FaFolderOpen />
           <span>Medical Records</span>
         </NavLink>

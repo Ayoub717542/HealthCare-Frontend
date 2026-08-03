@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
 import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 
 
 function MedicalRecords(){
 
   const [recordes, setRecordes] = useState([]);
   const [showForm,setShowForm] = useState(false);
-  const {register, handleSubmit}= useForm();
+  const {register, handleSubmit,reset}= useForm();
+  const [patients,setPatients]=useState([]);
+
+  function fetchPatients(){
+    api.get("/patients/obtenirTousLesPatients").then((response) => {
+            setPatients(response.data);
+    })
+    .catch((error) =>{
+        console.log(error);
+        toast.error("An error occurred while fetching Patients");
+    });
+  }
 
    function fetchMedicalRecords() {
     api.get("/DossierMedical/getAllDossierMedical")
@@ -20,10 +31,24 @@ function MedicalRecords(){
             toast.error("An error occurred while fetching Medical recores ")
         });
 }
+ function OnSubmit(data) {
+    api.post("/DossierMedical/ajouterDossierMedical", data)
+        .then(() => {
+            toast.success("Medical record added successfully");
+            reset();
+            setShowForm(false);
+            fetchMedicalRecords();
+        })
+        .catch((error) => {
+            console.log(error);
+            toast.error("An error occurred while adding the Medical record");
+        });
+  }
+
  useEffect(()=>{
         fetchMedicalRecords()
+        fetchPatients()
     },[]);
-
 
     return(
  <>
@@ -41,7 +66,12 @@ function MedicalRecords(){
             <input type="date" {...register("dateCreation")} />
 
             <label>patientId</label>
-            <input type="number" {...register("patientId")} />
+            <select {...register("patientId")}>
+                <option value="">Chose Your Patient</option>
+                {patients.map((patient) => (
+                    <option key={patient.id} value={patient.id}>{patient.nom} {patient.prenom}</option>
+                ))}
+            </select>
 
             <button type="submit">Save</button>
             <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
@@ -49,10 +79,9 @@ function MedicalRecords(){
         </div>
 ):(
   <div className="recordes">
-       
        <div className="table-header">
        <h2>Medical Recoreds</h2>
-       <button>add An Record</button>
+       <button  onClick={() => setShowForm(true)}>add An Record</button>
        </div>
        <table>
         <thead>
@@ -74,12 +103,10 @@ function MedicalRecords(){
                         <td>{record.dateCreation}</td>
                         <td>{record.patient?.nom} {record.patient?.prenom}</td>
                     <td>
-                         <button className="edit-btn" onClick={() => handleEdit(doctor)}>
-                      <i className="fa-solid fa-pen"></i> Edit
+                         <button className="edit-btn">
+                      <i className="fa-solid fa-pen"></i> details
                     </button>
-                    <button className="delete-btn" onClick={() => handleDelete(doctor)}>
-                      <i className="fa-solid fa-trash"></i> Delete
-                    </button>
+                
                     </td>
                     </tr>
 
@@ -94,8 +121,6 @@ function MedicalRecords(){
 )
 }
 
-
-      
 </>
     )
 }
