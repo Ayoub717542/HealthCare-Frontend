@@ -7,33 +7,46 @@ import { useNavigate } from "react-router-dom";
 function Patients() {
 const navigate = useNavigate();
 
-  function fetchPatients(){
-    api.get("/patients/obtenirTousLesPatients").then((response) => {
-    setPatients(response.data);
-    });
-
-  }
-
+ 
   const [patients, setPatients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
-  const [sortOrder, setSortOrder] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [sortOrder, setSortOrder] = useState("asc");
+  
+ function fetchPatients(){
+    api.get("/patients/searchPatientParNom",{
+      params : {
+        nom:search,
+        pageNumber: pageNumber,
+        pageSize: 5,
+        sortBy:"nom",
+        sortDir:sortOrder,
+      },
+    }).then((responce) => {
+      setPatients(responce.data.content);
+      setTotalPages(responce.data.totalPages);
+    })
+
+  }
+  {/* the problem here is that if we call normal use effect every key we type in the search bow it calls the backend immidiatly that is lots of requests so the solusion is to add timeOut debounced useEffect*/}
+
+
+
+    useEffect(() => { 
+      const timer = setTimeout(()=>{  {/*we wait a biit after the user stop typing so we wait 500 then we call fetchPatients */}
+      fetchPatients();
+      },500)
+       return()=>clearTimeout(timer)    //means if i type A the timer starts and when i type y it cansle the previous timer and start a new 500ms  and that happens every time we write a letter, and if the timer finish it calls the function right?
+    }, [search,pageNumber,sortOrder]);   {/* now every time  these use states change react automatically re-runs fetchPatients function and get fresh data from backend */}
+
+  useEffect(() => { // reset to page 1 whenever the search text changes
+    setPageNumber(1);
+  }, [search]);
 
   const {register,handleSubmit,reset} = useForm();
-
-  const filterByName = [...patients]
-  .filter((patient) => (patient.nom || "").toLowerCase().includes(search.toLowerCase()))
-  .sort((a, b) => {
-    if (sortOrder === "asc") {
-      return (a.nom || "").localeCompare(b.nom || "");
-    }
-
-    if (sortOrder === "desc") {
-      return (b.nom|| "").localeCompare(a.nom || "");
-    }
-    return 0;
-  });
 
   function onSubmit(data){
 
@@ -63,9 +76,7 @@ const navigate = useNavigate();
     }
   }
 
-    useEffect(() => {
-        fetchPatients();
-    }, []);
+  
     
     function handleEdit(patient){
         reset({
@@ -126,27 +137,25 @@ const navigate = useNavigate();
         </div>
       ) : (
         <>
+       <div className="search-bar">
         <input
           type="text"
           placeholder="Search patient by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-/>
-   <select
-  value={sortOrder}
-  onChange={(e) => setSortOrder(e.target.value)}
->
-  <option value="">Sort by name</option>
-  <option value="asc">A → Z</option>
-  <option value="desc">Z → A</option>
-</select>
-
+        />
+        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+          <option value="">Sort by name</option>
+          <option value="asc">A → Z</option>
+          <option value="desc">Z → A</option>
+        </select>
+      </div>
         <div className="table-header">
           <h2>Patients</h2>
           <button onClick={() => setShowForm(true)} className="add-btn" >Add Patient</button>
         </div>
 
-        {filterByName.length === 0 ? (
+        {patients.length === 0 ? (
   search ? (
     <p>No patients found.</p>
   ) : (
@@ -158,7 +167,8 @@ const navigate = useNavigate();
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Last Name</th>
+                <th>First Name</th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Birth Date</th>
@@ -166,16 +176,17 @@ const navigate = useNavigate();
               </tr>
             </thead>
             <tbody>
-              {filterByName.map((patient) => (
+              {patients.map((patient) => (
                 <tr key={patient.id}>
                   <td>{patient.id}</td>
-                  <td>{patient.nom} {patient.prenom}</td>
+                  <td>{patient.nom}</td>
+                  <td>{patient.prenom}</td>
                   <td>{patient.email}</td>
                   <td>{patient.telephone}</td>
                   <td>{patient.dateNaissance}</td>
                   
                   <td>
-                    <button onClick={() => navigate(`/patients/${patient.id}`)}>Details</button>
+                    <button className="details-btn" onClick={() => navigate(`/patients/${patient.id}`)}>Details</button>
                     <button className="edit-btn" onClick={() => handleEdit(patient)}><i className="fa-solid fa-pen"></i> Edit</button>
                      <button className="delete-btn" onClick={() => handleDelete(patient )}><i className="fa-solid fa-trash"></i> Delete</button>
                   </td>
@@ -183,6 +194,16 @@ const navigate = useNavigate();
               ))}
             </tbody>
           </table>
+
+               <div className="pagination">
+                  <button disabled={pageNumber <= 1} onClick={() => setPageNumber((p) => p - 1)}>
+                    Prev
+                  </button>
+                  <span> Page {pageNumber} of {totalPages} </span>
+                  <button disabled={pageNumber >= totalPages} onClick={() => setPageNumber((p) => p + 1)}>
+                    Next
+                  </button>
+                </div>
         </>
         )}
         </>
