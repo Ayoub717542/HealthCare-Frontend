@@ -3,6 +3,14 @@ import api from "../service/api";
 import {useForm} from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@mui/material";
 
 function Patients() {
 const navigate = useNavigate();
@@ -15,7 +23,9 @@ const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [sortOrder, setSortOrder] = useState("asc");
-  
+  const [open, setOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null); 
+
  function fetchPatients(){
     api.get("/patients/searchPatientParNom",{
       params : {
@@ -59,7 +69,6 @@ const navigate = useNavigate();
       .catch(() => {
         toast.error("c.");
       });
-    
 
     }else{
          api.post("/patients/ajouterPatient", data).then(() => {
@@ -73,8 +82,6 @@ const navigate = useNavigate();
       });
     }
   }
-
-  
     
     function handleEdit(patient){
         reset({
@@ -84,23 +91,53 @@ const navigate = useNavigate();
         telephone: patient.telephone,
         dateNaissance: patient.dateNaissance,
     })
+
     setEditingId(patient.id)
     setShowForm(true);
     }
-    
-  function handleDelete(patient){
-        const sure = window.confirm(`Delete ${patient.prenom} ${patient.nom}?`);
-        if(!sure) return;
-        api.delete(`/patients/supprimer/${patient.id}`).then(() => {
+
+    function handleDelete(patient) {
+    setSelectedPatient(patient);
+    setOpen(true);
+}
+  function confirmDelete(){
+        api.delete(`/patients/supprimer/${selectedPatient.id}`).then(() => {
             fetchPatients();
             toast.success("Patient successfully deleted!");
         })
         .catch(() => {
             toast.error("An error has occurred");
         });
+            setOpen(false);
   }
   return (
     <>  
+    <Dialog
+    open={open}
+    onClose={() => setOpen(false)}
+    aria-labelledby="delete-dialog-title"
+>
+    <DialogTitle id="delete-dialog-title">
+        Delete patient?
+    </DialogTitle>
+
+    <DialogContent>
+        <DialogContentText>
+            Are you sure you want to delete{" "}
+            {selectedPatient?.prenom} {selectedPatient?.nom}?
+        </DialogContentText>
+    </DialogContent>
+
+    <DialogActions>
+        <Button onClick={() => setOpen(false)}>
+            Cancel
+        </Button>
+
+        <Button onClick={confirmDelete} color="error">
+            Delete
+        </Button>
+    </DialogActions>
+</Dialog>
     <div className="patients">
       {showForm ? (
         <div className="form-container">

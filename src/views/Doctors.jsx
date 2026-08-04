@@ -9,19 +9,24 @@ function Doctors() {
   const [doctorsRendezVous, setdoctorsRendezVous] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [specialite, setSpecialite] = useState([]);
+  const {register,reset,handleSubmit} = useForm();
 
-  const {register,reset,handleSubmit} = useForm(); 
 
-  function fetchDoctors() {
-    api.get("/medecine/getMedecinePagination").then((response) => {
-      setDoctors(response.data.content);
+useEffect(()=>{
+      api.get("/medecine/getMedecinePagination").then((response) => {
+      setSpecialite([...new Set(response.data.content.map((d) => d.specialite))])
     });
+},[])
+    
+  function filterDoctorByspecialite(specialite){
+    api.get("/medecine/searchMedecinParSpecialite",{
+      params: {specialite}
+    }).then((response) => {
+      setDoctors(response.data.content);
+    })
   }
   
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
   function OnSubmit(data) {
 
     if (editingId) {
@@ -89,6 +94,16 @@ function Doctors() {
         </div>
       ) : (
         <>
+          <div>
+            <select onChange={(e) => filterDoctorByspecialite(e.target.value)}>
+              <option value="">filter By specialite</option>
+              {specialite.map((specialite) => (
+                <option key={specialite} value={specialite}>
+                      {specialite}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="table-header">
             <h2>Doctors</h2>
             <button onClick={() => setShowForm(true)} className="add-btn">Add Doctor</button>

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 // Axios instence Configuration 
 export const api = axios.create({
   baseURL : "http://localhost:8080/api"
@@ -26,6 +26,7 @@ api.interceptors.response.use(
   //if the request is successfull
     (response) => {
         console.log('Received Response:', response.status, response.config.url, response.data);
+        toast.success("Request successful!");
         return response;
     },
     //if it fails
@@ -34,24 +35,24 @@ api.interceptors.response.use(
         //check the HTTP status weather its 401 or 404...
             switch (error.response.status){
         case 401:
-            console.error('Authorization Failed...');
+            toast.error("Authorization Failed...")
             localStorage.removeItem("token");
             window.location.replace("/login");
           break;
         case 404:
-          console.error('Resource Not Found: The requested endpoint does not exist.');
+          toast.error("Resource not found.");
           break;
         case 500:
-          console.error('Server Error: Something went wrong on the server.');
+          toast.error('Server Error: Something went wrong on the server.');
           break;
         default:
-          console.error(`Unhandled HTTP Error: Status ${error.response.status}`);
+          toast.error(`Unhandled HTTP Error: Status ${error.response.status}`);
           break;
             }
         }else if (error.request){
-             console.error('No response received from the server. Please check your network connection.');
+             toast.error('No response received from the server. Please check your network connection.');
         }else{
-             console.error('Error setting up the request:', error.message);
+             toastd.error('Error setting up the request:', error.message);
         }
 
   return Promise.reject(error);

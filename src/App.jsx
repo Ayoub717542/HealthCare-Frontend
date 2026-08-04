@@ -16,6 +16,7 @@ import PatientProfile from "./views/MyProfile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PatientDetails from "./views/PatientDetails";
+
 function App() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState(null);

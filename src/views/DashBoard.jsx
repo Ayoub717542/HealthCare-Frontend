@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../service/api";
 import axios from "axios";
-import {getUserRole} from "../utils/auth"
+import {getUserRole} from "../utils/auth";
+
 function DashBoard() {
 
   const username=localStorage.getItem("username");
@@ -105,6 +106,7 @@ function DashBoard() {
       </div>
           </>          
         )}
+
            {userRole ==="PATIENT" && (
           <>
             <h1>Welcome back {username}</h1>
