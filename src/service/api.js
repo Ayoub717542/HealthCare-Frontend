@@ -26,7 +26,7 @@ api.interceptors.response.use(
   //if the request is successfull
     (response) => {
         console.log('Received Response:', response.status, response.config.url, response.data);
-        toast.success("Request successful!");
+        console.log("Request successful!");
         return response;
     },
     //if it fails
@@ -40,19 +40,19 @@ api.interceptors.response.use(
             window.location.replace("/login");
           break;
         case 404:
-          toast.error("Resource not found.");
+          console.log("Resource not found.");
           break;
         case 500:
-          toast.error('Server Error: Something went wrong on the server.');
+          console.log('Server Error: Something went wrong on the server.');
           break;
         default:
-          toast.error(`Unhandled HTTP Error: Status ${error.response.status}`);
+          console.log(`Unhandled HTTP Error: Status ${error.response.status}`);
           break;
             }
         }else if (error.request){
-             toast.error('No response received from the server. Please check your network connection.');
+             console.log('No response received from the server. Please check your network connection.');
         }else{
-             toastd.error('Error setting up the request:', error.message);
+             console.log('Error setting up the request:', error.message);
         }
 
   return Promise.reject(error);

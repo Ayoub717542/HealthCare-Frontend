@@ -9,23 +9,17 @@ function Doctors() {
   const [doctorsRendezVous, setdoctorsRendezVous] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  const [specialite, setSpecialite] = useState([]);
   const {register,reset,handleSubmit} = useForm();
 
 
 useEffect(()=>{
       api.get("/medecine/getMedecinePagination").then((response) => {
-      setSpecialite([...new Set(response.data.content.map((d) => d.specialite))])
+      setDoctors(response.data.content);
     });
 },[])
     
-  function filterDoctorByspecialite(specialite){
-    api.get("/medecine/searchMedecinParSpecialite",{
-      params: {specialite}
-    }).then((response) => {
-      setDoctors(response.data.content);
-    })
-  }
+
+
   
   function OnSubmit(data) {
 
@@ -94,16 +88,7 @@ useEffect(()=>{
         </div>
       ) : (
         <>
-          <div>
-            <select onChange={(e) => filterDoctorByspecialite(e.target.value)}>
-              <option value="">filter By specialite</option>
-              {specialite.map((specialite) => (
-                <option key={specialite} value={specialite}>
-                      {specialite}
-                </option>
-              ))}
-            </select>
-          </div>
+          
           <div className="table-header">
             <h2>Doctors</h2>
             <button onClick={() => setShowForm(true)} className="add-btn">Add Doctor</button>
@@ -147,3 +132,61 @@ useEffect(()=>{
 }
 
 export default Doctors;
+
+  // const [specialite, setSpecialite] = useState([]);
+  // setSpecialite([...new Set(response.data.content.map((d) => d.specialite))])
+  // function filterDoctorByspecialite(specialite){
+  //   api.get("/medecine/searchMedecinParSpecialite",{
+  //     params: {specialite}
+  //   }).then((response) => {
+  //     setDoctors(response.data.content);
+  //   })
+  // }
+  // <div>
+  //           <select onChange={(e) => filterDoctorByspecialite(e.target.value)}>
+  //             <option value="">filter By specialite</option>
+  //             {specialite.map((specialite) => (
+  //               <option key={specialite} value={specialite}>
+  //                     {specialite}
+  //               </option>
+  //             ))}
+  //           </select>
+  //         </div>
+
+
+  
+  // const [specialities , setSpecialeties] = useState([]);
+  // setSpecialeties([...new Set(response.data.content).map((doctor) => doctor.specialite)])
+
+  // function filterByspecialite(specialite){
+  //   api.get("medecine/searchMedecinParSpecialite",{
+  //     params:{specialite}
+  //   }).then((response)=> {setDoctors(response.data.content)})
+  // }
+
+  // <select onChange={(event) => filterByspecialite(event.target.value)}>
+  //   {specialities.map((specialite)=> (
+  //     <option key={specialite} value={specialite}>{specialite}</option>
+  //   ))}
+  // </select>
+
+//   const [search,setSearch] =useState("");
+
+//   function getmedecinBySpecialite(specialite){
+//       api.get("medecine/searchMedecinParSpecialite",{
+//         params:{specialite}
+//       }).then((response) =>{setDoctors(response.data.content)})
+//   } 
+
+//  <select onChange={(event) => getmedecinBySpecialite(event.target.value)}>
+//     {specialities.map((specialite)=> (
+//       <option key={specialite} value={specialite}>{specialite}</option>
+//     ))}
+//   </select>
+
+// function searchBySpecialite(specialite){
+//   api.get("medecine/searchMedecinParSpecialite",{
+//     params:{specialite}
+//   }).then((response) => setDoctors(response.data.content))
+//   .catch((error) => {console.log(error)})
+// }

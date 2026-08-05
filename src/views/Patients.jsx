@@ -15,14 +15,15 @@ import {
 function Patients() {
 const navigate = useNavigate();
 
- 
   const [patients, setPatients] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
+  // pagination and sortingn states
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [sortOrder, setSortOrder] = useState("asc");
+
   const [open, setOpen] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null); 
 
@@ -39,10 +40,8 @@ const navigate = useNavigate();
       setPatients(responce.data.content);
       setTotalPages(responce.data.totalPages);
     })
-
   }
-  {/* the problem here is that if we call normal use effect every key we type in the search bow it calls the backend immidiatly that is lots of requests so the solusion is to add timeOut debounced useEffect*/}
-
+  {/* the problem here is that if we call normal use effect every key we type in the search now it calls the backend immidiatly that is lots of requests so the solusion is to add timeOut debounced useEffect*/}
     useEffect(() => { 
       const timer = setTimeout(()=>{  {/*we wait a biit after the user stop typing so we wait 500 then we call fetchPatients */}
       fetchPatients();
@@ -57,7 +56,6 @@ const navigate = useNavigate();
   const {register,handleSubmit,reset} = useForm();
 
   function onSubmit(data){
-
      if(editingId){
         api.put(`/patients/modifier/${editingId}`, data).then(() => {
         setShowForm(false);
@@ -67,7 +65,7 @@ const navigate = useNavigate();
         toast.success("Patient updated successfully!");
     })
       .catch(() => {
-        toast.error("c.");
+        toast.error("Something went Wrong");
       });
 
     }else{
@@ -82,7 +80,6 @@ const navigate = useNavigate();
       });
     }
   }
-    
     function handleEdit(patient){
         reset({
         nom: patient.nom,
@@ -100,6 +97,7 @@ const navigate = useNavigate();
     setSelectedPatient(patient);
     setOpen(true);
 }
+
   function confirmDelete(){
         api.delete(`/patients/supprimer/${selectedPatient.id}`).then(() => {
             fetchPatients();
