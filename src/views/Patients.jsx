@@ -53,6 +53,8 @@ const navigate = useNavigate();
     setPageNumber(1);
   }, [search]);
 
+
+
   const {register,handleSubmit,reset} = useForm();
 
   function onSubmit(data){
@@ -62,7 +64,6 @@ const navigate = useNavigate();
         setEditingId(null);
         reset();
         fetchPatients();
-        toast.success("Patient updated successfully!");
     })
       .catch(() => {
         toast.error("Something went Wrong");
@@ -175,7 +176,9 @@ const navigate = useNavigate();
           type="text"
           placeholder="Search patient by name..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)
+
+          }
         />
         <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
           <option value="">Sort by name</option>

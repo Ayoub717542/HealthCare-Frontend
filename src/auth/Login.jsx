@@ -8,8 +8,6 @@ function Login() {
       
         const [showPassword, setShowPassword] = useState(false);
         const navigate = useNavigate(); 
-
-         //register an input field into React Hook Form 
         const {register,handleSubmit,formState:{ errors }} = useForm();
 
     const handleLogin = async (data) => {
