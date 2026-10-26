@@ -9,6 +9,8 @@ function Register(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email,setEmail] = useState("");
+    const [nom, setNom] = useState("");
+    const [prenom, setPrenom] = useState("");
 
     const handleRegister = async (e) => {
     e.preventDefault();
@@ -18,6 +20,8 @@ function Register(){
         username,
         email,
         password,
+        nom,
+        prenom,
       });
 
       localStorage.setItem("token", response.data.token);
@@ -51,6 +55,20 @@ function Register(){
             name="username"
             value={username}
             onChange={(e)=>{  setUsername(e.target.value)}}
+            />
+                <label>Nom</label>
+            <input
+            type="text"
+            name="nom"
+            value={nom}
+            onChange={(e)=>{setNom(e.target.value)}}
+            />
+                <label>Prénom</label>
+            <input
+            type="text"
+            name="prenom"
+            value={prenom}
+            onChange={(e)=>{setPrenom(e.target.value)}}
             />
                 <label>Email</label>
             <input 
